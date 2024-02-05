@@ -1,7 +1,7 @@
 grails:
     profile: plugin
     codegen:
-        defaultPackage: dk.glasius.phone
+        defaultPackage: dk.glasius.phoneconstraint
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events

@@ -1,4 +1,4 @@
-package dk.glasius.phone
+package dk.glasius.phoneconstraint
 
 import static com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat
 
@@ -10,30 +10,30 @@ import org.springframework.validation.Errors
 @CompileStatic
 class PhoneNumberConstraint extends AbstractConstraint {
 
-    static final String PHONE_CONSTRAINT = "phone"
+    static final String PHONE_CONSTRAINT = "phoneNumber"
 
     boolean enabled = true
-    String defaultRegion = 'EN'
+    String defaultRegion = 'US'
     PhoneNumberFormat phoneNumberFormat = PhoneNumberFormat.INTERNATIONAL
     
     PhoneNumberConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource)
 
-        this.enabled = (boolean) constraintParameter
+        enabled = validateParameter(constraintParameter) as Boolean
     }
 
     @Override
     protected Object validateParameter(Object constraintParameter) {
         if (isBoolean(constraintParameter)) {
             return constraintParameter
-        }
-        if (isLanguage(constraintParameter)) {
+        } else if (isLanguage(constraintParameter)) {
             defaultRegion = constraintParameter as String
-        }
-        if (isMapConfig(constraintParameter)) {
+            return true
+        } else if (isMapConfig(constraintParameter)) {
             Map config = constraintParameter as Map<String, String>
             defaultRegion = config.region ?: defaultRegion
             phoneNumberFormat = parseNumberFormat(config.numberFormat) ?: phoneNumberFormat
+            return config.region || config.numberFormat 
         }
         throw new IllegalArgumentException("Parameter for constraint [$PHONE_CONSTRAINT] of property [$constraintPropertyName] of class [$constraintOwningClass] must be a boolean, a language string or a config map")
     }
@@ -64,13 +64,13 @@ class PhoneNumberConstraint extends AbstractConstraint {
     private static boolean isMapConfig(constraintParameter) {
         if (constraintParameter instanceof Map) {
             Map config = constraintParameter as Map<String, String>
-            if(config.region && config.region.size() != 2) {
-                throw new IllegalArgumentException("Wrong config parameter [region]. Must be exactly to chars long") 
+            if(config.region && !PhoneNumberUtil.isValidRegionCode(config.region)) {
+                throw new IllegalArgumentException("Wrong config parameter [region]. [$config.region] is not supported") 
             }
             if(config.numberFormat && !parseNumberFormat(config.numberFormat)) {
                 throw new IllegalArgumentException("Wrong config parameter [numberFormat]. Must be a value from [com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat]")
             }
-            return config.region?.size() == 2 && parseNumberFormat(config.numberFormat)
+            return true
         }
         return false
     }

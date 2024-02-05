@@ -1,4 +1,4 @@
-package grails.phone.constraint
+package dk.glasius.phoneconstraint
 
 import grails.boot.*
 import grails.boot.config.GrailsAutoConfiguration

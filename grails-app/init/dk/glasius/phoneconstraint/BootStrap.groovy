@@ -1,4 +1,4 @@
-package grails.phone.constraint
+package dk.glasius.phoneconstraint
 
 class BootStrap {
 

@@ -1,4 +1,4 @@
-package dk.glasius.phone
+package dk.glasius.phoneconstraint
 
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -158,6 +158,22 @@ class PhoneNumberUtilSpec extends Specification {
         '+61412345678'              || '+61412345678' // Australia
         '+86 139 1099 8888'         || '+8613910998888' // China
         '+8613910998888'            || '+8613910998888' // China
+    }
+
+    void "is region valid"() {
+        when:
+        def result = PhoneNumberUtil.isValidRegionCode(region)
+
+        then:
+        result == expectedResult
+
+        where:
+        region || expectedResult
+        'BR'   || true
+        'DK'   || true
+        'US'   || true
+        'EN'   || false
+        'GB'   || true
     }
 
 }

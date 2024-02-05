@@ -1,4 +1,4 @@
-package dk.glasius.phone
+package dk.glasius.phoneconstraint
 
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat
@@ -23,6 +23,10 @@ class PhoneNumberUtil {
         Phonenumber.PhoneNumber phone = getPhoneNumber(number, defaultRegion)
         PhoneNumberFormat phoneNumberFormat = defaultFormat ?: PhoneNumberFormat.INTERNATIONAL
         instance.format(phone, phoneNumberFormat)
+    }
+
+    static boolean isValidRegionCode(String regionCode) {
+        return regionCode != null && instance.supportedRegions.contains(regionCode)
     }
 
     protected static Phonenumber.PhoneNumber getPhoneNumber(String number, String defaultRegion = null) {
