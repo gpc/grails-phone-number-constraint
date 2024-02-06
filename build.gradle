@@ -7,32 +7,26 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
     }
 }
+plugins {
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id 'maven-publish'
+    id 'signing'
+}
+group "io.github.gpc"
 
-version "0.1"
-group "dk.glasius.phone"
-
-apply plugin:"org.grails.grails-plugin"
+apply plugin: "org.grails.grails-plugin"
 
 repositories {
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
 
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-}
-
 dependencies {
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    console "org.grails:grails-console"
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.grails:grails-core"
-    
+
     compileOnly "org.grails:grails-plugin-domain-class"
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.29'
 
@@ -45,23 +39,105 @@ dependencies {
 bootRun {
     ignoreExitValue true
     jvmArgs(
-        '-Dspring.output.ansi.enabled=always', 
-        '-noverify', 
-        '-XX:TieredStopAtLevel=1',
-        '-Xmx1024m')
+            '-Dspring.output.ansi.enabled=always',
+            '-noverify',
+            '-XX:TieredStopAtLevel=1',
+            '-Xmx1024m')
     sourceResources sourceSets.main
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }
 
-tasks.withType(GroovyCompile) {
+tasks.withType(GroovyCompile).configureEach {
     configure(groovyOptions) {
         forkOptions.jvmArgs = ['-Xmx1024m']
     }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 // enable if you wish to package this plugin as a standalone application
 bootJar.enabled = false
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = 'phone-number-constraint'
+            version = project.version
+
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'phone-number-constraint'
+                description = "This plugin establishes a 'phoneNumber' constraint for validateable objects."
+                url = 'https://github.com/gpc/grails-phone-number-constraint'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'sbglasius'
+                        name = 'Søren  Berg Glasius'
+                        email = 'soeren@glasius.dk'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/gpc/grails-phone-number-constraint.git'
+                    developerConnection = 'scm:git:ssh://github.com:gpc/grails-phone-number-constraint.git'
+                    url = 'https://github.com/gpc/grails-phone-number-constraint/tree/main'
+                }
+            }
+        }
+    }
+}
+
+ext."signing.keyId" = project.findProperty('signing.keyId') ?: System.getenv('SIGNING_KEY_ID')
+ext."signing.password" = project.findProperty('signing.password') ?: System.getenv('SIGNING_PASSPHRASE')
+ext."signing.secretKeyRingFile" = project.findProperty('signing.secretKeyRingFile') ?: (System.getenv('SIGNING_PASSPHRASE') ?: "${System.getProperty('user.home')}/.gnupg/secring.gpg")
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+afterEvaluate {
+    signing {
+        required { isReleaseVersion }
+        sign publishing.publications.maven
+    }
+}
+
+tasks.withType(Sign).configureEach {
+    onlyIf { isReleaseVersion }
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            def ossUser = System.getenv('SONATYPE_USERNAME') ?: project.findProperty('sonatypeOss2Username') ?: ''
+            def ossPass = System.getenv('SONATYPE_PASSWORD') ?: project.findProperty("sonatypeOss2Password") ?: ''
+            def ossStagingProfileId = System.getenv('SONATYPE_STAGING_PROFILE_ID') ?: project.findProperty("sonatypeOssStagingProfileId") ?: ''
+
+            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            username = ossUser
+            password = ossPass
+            stagingProfileId = ossStagingProfileId
+        }
+    }
+}
+
+tasks.register('snapshotVersion') {
+    doLast {
+        if (!project.version.endsWith('-SNAPSHOT')) {
+            ant.propertyfile(file: "gradle.properties") {
+                entry(key: "version", value: "${project.version}-SNAPSHOT")
+            }
+        }
+    }
+}
+

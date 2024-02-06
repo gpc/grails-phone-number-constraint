@@ -24,6 +24,10 @@ class PhoneNumberUtil {
         PhoneNumberFormat phoneNumberFormat = defaultFormat ?: PhoneNumberFormat.INTERNATIONAL
         instance.format(phone, phoneNumberFormat)
     }
+    
+    static PhoneNumberFormat parseNumberFormat(String format) {
+        PhoneNumberFormat.values().find { it.name() == format }
+    }
 
     static boolean isValidRegionCode(String regionCode) {
         return regionCode != null && instance.supportedRegions.contains(regionCode)
