@@ -27,7 +27,7 @@ jobs:
       - name: Extract SDK config
         id: sdk
         run: |
-          java=$(grep '^java=' .sdkmanrc | cut -d'=' -f2)
+          java=$(grep '^java=' .sdkmanrc | cut -d'=' -f2 | sed 's/-.*//')
           echo "java-version=$java" >> $GITHUB_OUTPUT
       - name: Set up JDK
         uses: actions/setup-java@v4
