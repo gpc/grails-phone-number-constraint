@@ -1,0 +1,25 @@
+name: "Release - Drafter"
+on:
+  issues:
+    types: [ closed,reopened ]
+  push:
+    branches:
+      - '[0-9]+.[0-9]+.x'
+      - 'main'
+  pull_request:
+    types: [ opened, reopened, synchronize, labeled ]
+  workflow_dispatch:
+concurrency:
+  group: release-pipeline
+  cancel-in-progress: false
+jobs:
+  update_release_draft:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: "📝 Update Release Draft"
+        uses: release-drafter/release-drafter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
