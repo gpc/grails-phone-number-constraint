@@ -1,0 +1,42 @@
+import com.adarshr.gradle.testlogger.TestLoggerExtension
+
+plugins {
+    id 'com.adarshr.test-logger'
+}
+
+def isCi = System.getenv('CI') != null
+def isWindows = System.getProperty('os.name')?.toLowerCase()?.contains('windows')
+
+extensions.configure(TestLoggerExtension) {
+    it.theme = isCi ? 'plain-parallel' : (isWindows ? 'standard-parallel' : 'mocha-parallel')
+    it.showExceptions = true
+    it.showStandardStreams = false
+    it.showSummary = true
+    it.showPassed = true
+    it.showSkipped = true
+    it.showFailed = true
+}
+
+tasks.withType(Test).configureEach {
+    onlyIf {
+        !project.hasProperty('skipTests')
+    }
+
+    useJUnitPlatform()
+
+    maxHeapSize = '1g'
+
+    reports {
+        junitXml.required = false
+        html.required = true
+    }
+
+    testLogging {
+        showStandardStreams = false
+        exceptionFormat = 'full'
+        stackTraceFilters = ['groovy']
+        events = ['failed', 'skipped', 'standardError']
+        showStackTraces = true
+        showCauses = true
+    }
+}

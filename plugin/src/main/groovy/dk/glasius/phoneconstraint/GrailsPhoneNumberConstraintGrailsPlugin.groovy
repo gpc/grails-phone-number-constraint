@@ -4,7 +4,7 @@ import grails.plugins.Plugin
 
 class GrailsPhoneNumberConstraintGrailsPlugin extends Plugin {
 
-    def grailsVersion = "5.3.0 > *"
+    def grailsVersion = "7.0.0 > *"
 
     def title = 'Grails Phone Constraint'
     def author = 'Søren Berg Glasius'

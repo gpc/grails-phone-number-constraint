@@ -1,0 +1,33 @@
+import org.apache.grails.gradle.publish.GrailsPublishExtension
+
+plugins {
+    id 'config.compile'
+    id 'config.grails-plugin'
+    id 'config.publish'
+    id 'config.testing'
+}
+
+version = projectVersion
+group = 'io.github.gpc'
+
+dependencies {
+    profile 'org.apache.grails.profiles:plugin'
+
+    compileOnly platform("org.apache.grails:grails-bom:$grailsVersion")
+    compileOnly 'org.apache.grails:grails-dependencies-starter-web'
+
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.29'
+
+    testImplementation platform("org.apache.grails:grails-bom:$grailsVersion")
+    testImplementation 'org.apache.grails:grails-dependencies-test'
+    testImplementation 'org.mockito:mockito-core'
+}
+
+extensions.configure(GrailsPublishExtension) {
+    it.artifactId = 'phone-number-constraint'
+    it.githubSlug = 'gpc/grails-phone-number-constraint'
+    it.license.name = 'Apache-2.0'
+    it.title = 'Grails Phone Number Constraint'
+    it.desc = "This plugin establishes a 'phoneNumber' constraint for validateable objects."
+    it.developers = [sbglasius: 'Søren Berg Glasius']
+}
