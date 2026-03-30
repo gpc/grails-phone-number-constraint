@@ -1,6 +1,7 @@
 # Phone number constraint for Grails
 
-[![Build](https://github.com/gpc/grails-phone-number-constraint/actions/workflows/build.yml/badge.svg)](https://github.com/gpc/grails-phone-number-constraint/actions/workflows/build.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.gpc/phone-number-constraint)](https://central.sonatype.com/artifact/io.github.gpc/phone-number-constraint)
+[![Build](https://github.com/gpc/grails-phone-number-constraint/actions/workflows/ci.yml/badge.svg)](https://github.com/gpc/grails-phone-number-constraint/actions/workflows/ci.yml)
 
 This plugin establishes a `phoneNumber` constraint property for validateable objects, that being domain objects, and
 objects implementing `grails.validation.Validateable`. It relies on
@@ -10,9 +11,20 @@ Google's [libphonenumber](https://github.com/google/libphonenumber)  Java implem
 
 To use this plugin, add the plugin to `build.gradle`:
 
+### Grails 7
+
 ```groovy
 dependencies {
-    compile "io.github.gpc:phone-number-constraint:1.0.0"
+    implementation "io.github.gpc:phone-number-constraint:2.0.0"
+}
+
+```
+
+### Grails 5, 6
+
+```groovy
+dependencies {
+    implementation "io.github.gpc:phone-number-constraint:1.0.0"
 }
 
 ```
