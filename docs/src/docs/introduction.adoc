@@ -1,0 +1,12 @@
+[[introduction]]
+== Introduction
+
+This plugin establishes a `phoneNumber` constraint property for validateable objects, that being domain objects, and
+objects implementing `grails.validation.Validateable`. It relies on
+Google's https://github.com/google/libphonenumber[libphonenumber] Java implementation.
+
+include::introduction/license.adoc[]
+
+include::introduction/acknowledgements.adoc[]
+
+include::introduction/sourceCode.adoc[]

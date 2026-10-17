@@ -1,0 +1,20 @@
+---
+project:
+  name: "phone-number-constraint"
+  title: "Grails Phone Number Constraint"
+  description: "This plugin establishes a 'phoneNumber' constraint for validateable objects."
+  org: "Grails Plugin Collective"
+github:
+  org: "gpc"
+  project: "grails-phone-number-constraint"
+license:
+  name: "Apache-2.0"
+contributors:
+  sbglasius: "Søren Berg Glasius"
+versions:
+  current: "2.0.0"
+  previous:
+  - "2.0.0"
+  - "1.0.0"
+  ignore:
+  - "snapshot"

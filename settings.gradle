@@ -39,10 +39,12 @@ buildscript {
 }
 // <<< grails-plugin-conventions
 
-rootProject.name = 'grails-phone-number-constraint-root'
+rootProject.name = 'phone-number-constraint-root'
 
 include('plugin')
-project(':plugin').name = 'grails-phone-number-constraint'
+project(':plugin').name = 'phone-number-constraint'
+include('docs')
+project(':docs').name = 'phone-number-constraint-docs'
 
 dependencyResolutionManagement {
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
