@@ -14,9 +14,9 @@ contributors:
   sbglasius: "Søren Berg Glasius"
   dauer: "Thomas Rasmussen"
 versions:
-  current: "2.0.0"
+  current: "3.0.0-RC1"
   previous:
-  - "2.0.0"
-  - "1.0.0"
+  - "3.0.0-RC1"
+  - "3.0.x"
   ignore:
   - "snapshot"
