@@ -1,0 +1,35 @@
+[[usage]]
+== Usage
+
+Add the plugin to `build.gradle`:
+
+[source,groovy,subs="attributes"]
+----
+dependencies {
+    implementation "io.github.gpc:phone-number-constraint:{version}"
+}
+----
+
+Apply the constraint in a `constraints` block:
+
+[source,groovy]
+----
+class PhoneNumber implements Validateable {
+
+    String number
+
+    static constraints = {
+        number phoneNumber: true                    // default region US
+        // number phoneNumber: 'DK'                 // region
+        // number phoneNumber: [region: 'DK', numberFormat: 'NATIONAL', format: true]
+    }
+}
+----
+
+All map keys are optional:
+
+`region`:: The region used to parse numbers without an international prefix. Defaults to `US`.
+`numberFormat`:: One of `E164`, `INTERNATIONAL`, `NATIONAL` or `RFC3966`. Defaults to `INTERNATIONAL`.
+`format`:: When `true`, the property value is replaced by the formatted number after successful validation.
+
+The default error message key is `default.invalid.phoneNumber.message`.

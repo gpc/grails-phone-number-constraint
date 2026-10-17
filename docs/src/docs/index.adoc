@@ -1,0 +1,6 @@
+= Grails Phone Number Constraint - Reference Documentation
+Grails Plugin Collective
+
+include::introduction.adoc[]
+
+include::usage.adoc[]
