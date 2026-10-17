@@ -5,7 +5,8 @@ plugins {
     id 'config.publish-root'
 }
 
-// Workarounds for config.docs (grails-plugin-conventions 1.0.0-RC3) on Gradle 9:
+// Workarounds for config.docs (grails-plugin-conventions 1.0.0-RC3) on Gradle 9, remove once fixed upstream:
+// https://github.com/grails-plugins/grails-plugin-template/issues/23
 // - groovy-base (above) gives aggregateGroovyApiDoc the defaults for the Groovydoc options added in Gradle 9.8
 // - aggregateGroovyApiDoc takes its Groovy tool classpath from the plugin project's groovydoc task, which Gradle
 //   resolves from a detached configuration owned by that project; resolving it from here is not allowed, so the

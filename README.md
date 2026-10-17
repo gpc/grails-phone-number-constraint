@@ -7,9 +7,7 @@ This plugin establishes a `phoneNumber` constraint property for validateable obj
 objects implementing `grails.validation.Validateable`. It relies on
 Google's [libphonenumber](https://github.com/google/libphonenumber)  Java implementation
 
-## Installation
-
-To use this plugin, add the plugin to `build.gradle`:
+## Compatibility
 
 | Plugin version | Grails version | Java version |
 |----------------|----------------|--------------|
@@ -17,13 +15,16 @@ To use this plugin, add the plugin to `build.gradle`:
 | 2.x            | 7              | 17+          |
 | 1.x            | 5, 6           | 11+          |
 
+## Installation
+
+To use this plugin, add the plugin to `build.gradle`:
+
 ### Grails 8
 
 ```groovy
 dependencies {
     implementation "io.github.gpc:phone-number-constraint:3.0.0"
 }
-
 ```
 
 ### Grails 7
@@ -32,7 +33,6 @@ dependencies {
 dependencies {
     implementation "io.github.gpc:phone-number-constraint:2.0.0"
 }
-
 ```
 
 ### Grails 5, 6
@@ -41,7 +41,6 @@ dependencies {
 dependencies {
     implementation "io.github.gpc:phone-number-constraint:1.0.0"
 }
-
 ```
 
 ## Example
