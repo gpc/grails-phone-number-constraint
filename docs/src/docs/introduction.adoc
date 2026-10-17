@@ -5,6 +5,19 @@ This plugin establishes a `phoneNumber` constraint property for validateable obj
 objects implementing `grails.validation.Validateable`. It relies on
 Google's https://github.com/google/libphonenumber[libphonenumber] Java implementation.
 
+[[requirements]]
+=== Requirements
+
+This version of the plugin requires Grails {grailsVersion} or later and Java 21.
+
+[cols="1,1,1",options="header"]
+|===
+| Plugin version | Grails version | Java version
+| 3.x | 8 | 21+
+| 2.x | 7 | 17+
+| 1.x | 5, 6 | 11+
+|===
+
 include::introduction/license.adoc[]
 
 include::introduction/acknowledgements.adoc[]

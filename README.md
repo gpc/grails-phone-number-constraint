@@ -7,9 +7,25 @@ This plugin establishes a `phoneNumber` constraint property for validateable obj
 objects implementing `grails.validation.Validateable`. It relies on
 Google's [libphonenumber](https://github.com/google/libphonenumber)  Java implementation
 
+## Compatibility
+
+| Plugin version | Grails version | Java version |
+|----------------|----------------|--------------|
+| 3.x            | 8              | 21+          |
+| 2.x            | 7              | 17+          |
+| 1.x            | 5, 6           | 11+          |
+
 ## Installation
 
 To use this plugin, add the plugin to `build.gradle`:
+
+### Grails 8
+
+```groovy
+dependencies {
+    implementation "io.github.gpc:phone-number-constraint:3.0.0"
+}
+```
 
 ### Grails 7
 
@@ -17,7 +33,6 @@ To use this plugin, add the plugin to `build.gradle`:
 dependencies {
     implementation "io.github.gpc:phone-number-constraint:2.0.0"
 }
-
 ```
 
 ### Grails 5, 6
@@ -26,7 +41,6 @@ dependencies {
 dependencies {
     implementation "io.github.gpc:phone-number-constraint:1.0.0"
 }
-
 ```
 
 ## Example
@@ -59,8 +73,8 @@ The following table describes the configuration options:
 | Config key    | default         | description                                                                                                                                                                                                                                                                    |
 |---------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `region`      | `US`            | The default region for phone numbers without the international `+xxx` prefix                                                                                                                                                                                                   |
-| `phoneFormat` | `INTERNATIONAL` | How phonenumbers are formatted, if `format` is true. Possible values to be found in [PhoneNumberFormat](https://github.com/google/libphonenumber/blob/a08d3711af51d79d1f9d7d3a12b2049da3a81e20/java/libphonenumber/src/com/google/i18n/phonenumbers/PhoneNumberUtil.java#L463) |
-| `format`      | `false`         | Will update the target object, with the property name with a formatted version of the phone number. If `INTERNATIONAL` is set in `phoneFormat` the international dialing code starting with `+xxx` is written to the field value. _This is an experimental feature_            |       
+| `numberFormat` | `INTERNATIONAL` | How phonenumbers are formatted, if `format` is true. Possible values (`E164`, `INTERNATIONAL`, `NATIONAL`, `RFC3966`) are found in [PhoneNumberFormat](https://github.com/google/libphonenumber/blob/a08d3711af51d79d1f9d7d3a12b2049da3a81e20/java/libphonenumber/src/com/google/i18n/phonenumbers/PhoneNumberUtil.java#L463) |
+| `format`      | `false`         | Will update the target object, with the property name with a formatted version of the phone number. If `INTERNATIONAL` is set in `numberFormat` the international dialing code starting with `+xxx` is written to the field value. _This is an experimental feature_            |       
 
 ## PhoneNumberUtil
 
@@ -68,7 +82,7 @@ The class `dk.glasius.phoneconstraint.PhoneNumberUtil` has convenience methods f
 
 ## Unit-testing your constraints
 
-When running a unit test, the cascade constraint isn't registered with Grails. To work around this issue, the test class
+When running a unit test, the phone number constraint isn't registered with Grails. To work around this issue, the test class
 must implement
 `org.grails.testing.GrailsUnitTest` and the following code must be added to the `setup()` method of the test:
 

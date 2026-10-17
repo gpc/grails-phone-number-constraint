@@ -18,5 +18,6 @@ dependencies {
 
     testImplementation platform("org.apache.grails:grails-bom:$grailsVersion")
     testImplementation 'org.apache.grails:grails-dependencies-test'
+    testImplementation 'org.apache.grails.i18n:grails-i18n'
     testImplementation 'org.mockito:mockito-core'
 }
