@@ -1,5 +1,27 @@
 plugins {
+    id 'groovy-base'
     id 'idea'
     id 'config.docs'
     id 'config.publish-root'
+}
+
+// Workarounds for config.docs (grails-plugin-conventions 1.0.0-RC3) on Gradle 9:
+// - groovy-base (above) gives aggregateGroovyApiDoc the defaults for the Groovydoc options added in Gradle 9.8
+// - aggregateGroovyApiDoc takes its Groovy tool classpath from the plugin project's groovydoc task, which Gradle
+//   resolves from a detached configuration owned by that project; resolving it from here is not allowed, so the
+//   tool classpath is resolved by the root project instead
+def groovydocToolScope = configurations.dependencyScope('groovydocTool')
+def groovydocToolResolvable = configurations.resolvable('groovydocToolClasspath') {
+    extendsFrom(groovydocToolScope.get())
+}
+dependencies {
+    groovydocTool platform("org.apache.grails:grails-bom:$grailsVersion")
+    groovydocTool 'org.apache.groovy:groovy'
+    groovydocTool 'org.apache.groovy:groovy-ant'
+    groovydocTool 'org.apache.groovy:groovy-groovydoc'
+    groovydocTool 'org.apache.groovy:groovy-templates'
+}
+
+tasks.named('aggregateGroovyApiDoc', Groovydoc) {
+    groovyClasspath = files(groovydocToolResolvable)
 }
