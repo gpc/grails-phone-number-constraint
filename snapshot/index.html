@@ -532,13 +532,14 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>Grails Phone Number Constraint - Reference Documentation</h1>
 <div class="details">
 <span id="author" class="author">Grails Plugin Collective</span><br>
-<span id="revnumber">version 2.0.1-SNAPSHOT</span>
+<span id="revnumber">version 3.0.0-SNAPSHOT</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a>
 <ul class="sectlevel2">
+<li><a href="#requirements">Requirements</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#acknowledgements">Acknowledgments</a></li>
 <li><a href="#sourceCode">Source code</a></li>
@@ -556,6 +557,43 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <p>This plugin establishes a <code>phoneNumber</code> constraint property for validateable objects, that being domain objects, and
 objects implementing <code>grails.validation.Validateable</code>. It relies on
 Google&#8217;s <a href="https://github.com/google/libphonenumber">libphonenumber</a> Java implementation.</p>
+</div>
+<div class="sect2">
+<h3 id="requirements">Requirements</h3>
+<div class="paragraph">
+<p>This version of the plugin requires Grails 8.0.0 or later and Java 21.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Plugin version</th>
+<th class="tableblock halign-left valign-top">Grails version</th>
+<th class="tableblock halign-left valign-top">Java version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21+</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17+</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5, 6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11+</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="license">License</h3>
@@ -596,7 +634,7 @@ Google&#8217;s <a href="https://github.com/google/libphonenumber">libphonenumber
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy">dependencies {
-    implementation "io.github.gpc:phone-number-constraint:2.0.1-SNAPSHOT"
+    implementation "io.github.gpc:phone-number-constraint:3.0.0-SNAPSHOT"
 }</code></pre>
 </div>
 </div>
@@ -644,8 +682,8 @@ Google&#8217;s <a href="https://github.com/google/libphonenumber">libphonenumber
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.1-SNAPSHOT<br>
-Last updated 2026-10-17 15:09:23 UTC
+Version 3.0.0-SNAPSHOT<br>
+Last updated 2026-10-17 15:25:42 UTC
 </div>
 </div>
 </body>
